@@ -5,7 +5,7 @@ Created on Thu May 21 11:31:51 2020
 @author: jonas
 """
 
-import numpy as np
+
 import hashlib
 
 commands = ['products', 'help', 'goodbye', 'weather', 'store']
@@ -29,23 +29,15 @@ intro = intro.lower()
 while True:
     
     if intro == 'products':
-        product = input(f'I can help you with the following products: {products}, let me know which you are looking for, and i will list the ones available \n')
+        product = input(f'I can help you with the following products: {list(dictionary.keys())}, let me know which you are looking for, and i will list the ones available \n')
         product = product.lower()
         
-        '''
-        if product == 'hammer' or product == 'hammers':
-            intro = input(f'We have the following hammers available: \n \n {hammers[0]} \n\n {hammers[1]}')
-        elif product == 'screwdriver' or products == 'screwdrivers':
-            intro = input(f'No screwdrivers are currently in stock, type \"products\" to see the list of products again \n')
-        '''
         if product in products:
             if len(dictionary[product]) == 0:
                 print('No more products in stock \n')
             else:
                 print(dictionary[product],'\n')
             intro = input('Anything else i can help you with, type \"help\", see the available products again type \"products\" \n')
-            
-
         
         elif product == 'goodbye':
             break
@@ -68,21 +60,20 @@ while True:
             options = input('You now have the following options:\n Add new product with the command \"add\" \n Delete product with the command \"delete\" \n Add link to specific product using \"links\" \n\n')
             if options == 'add':
                 added = input('Type the name of the product(s) you want to add if you want to add more than one item separate with a \",\" : \n\n')
-                products = products + added.split(',')
-                #products.append(added.split(','))
+                dictionary[added] = []
                 intro = input(f'You have now added the products, type a valid command to proceed: {commands}\n\n')
             elif options == 'delete':
                 delete =  input('Type the name of the product you want to delete: \n')
                 if delete in products: products.remove(delete)
                 intro = input(f'You have now deleted the products, type a valid command to proceed: {commands}\n\n')
             elif options == 'links':
-                productlink =  input(f'Type which product of {products} which you want to add the link: \n')
+                productlink =  input(f'Type which product of {list(dictionary.keys())} which you want to add the link: \n')
                 newlink = input('Now type the link you want to add \n')
                 dictionary[productlink].append(newlink)
-                print(dictionary)
                 intro = input(f'You have now added a link to the product, type a valid command to proceed: {commands}\n\n')
-            else:
-                password = input(f'Password was incorrect, try again \n') 
+        else:
+            intro = input(f'Password was incorrect, type \"configure\" to try again or \"help\" to see other options \n')
+            
                    
     elif intro == 'store':
         intro = input(f'The store nearest you is in {city} at the adress: Kongens Nytorv 24, 1050 {city}. Type \"help\" to see what else i can help with \n\n')
